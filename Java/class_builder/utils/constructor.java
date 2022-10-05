@@ -10,7 +10,6 @@ public class constructor
     private final void add(String key)
     {
         required_params.put(key, null);
-        System.out.println(required_params);
     }
     public constructor(String[] req_args){
         for(int a = 0; a < req_args.length; a++)
@@ -26,7 +25,15 @@ public class constructor
         }
         return val;
     }    
-    final int setProperty(String key, int val)
+    public final int setProperty(String key, int val)
+    {
+        if(required_params.containsKey(key))
+        {
+            required_params.put(key, val);
+        }
+        return val;
+    }
+    public final int[] setProperty(String key, int[] val)
     {
         if(required_params.containsKey(key))
         {
@@ -35,6 +42,14 @@ public class constructor
         return val;
     }
 
+    public final boolean setProperty(String key, boolean val)
+    {
+        if(required_params.containsKey(key))
+        {
+            required_params.put(key, val);
+        }
+        return val;
+    }
     public final void complyReqs()
     {
         for (HashMap.Entry<String, Object> kv : required_params.entrySet())

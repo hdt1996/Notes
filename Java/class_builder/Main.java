@@ -6,16 +6,22 @@ import java.util.Scanner;
 //import java.util.regex.Matcher;
 import java.util.ArrayList;
 
-public class write {
+public class Main {
     public static void main(String[] args)
     {
-        String currPath = new File("").getAbsolutePath();
-        System.out.println("\nWork Dir Path: "+currPath);
+        String wd_abs_path = new File("").getAbsolutePath();
+        System.out.println("\nWork Dir Path: "+wd_abs_path);
 
-        File temp_builder = new File("./class_builder/templates/builder.java");
-        if(temp_builder.exists() && !temp_builder.isDirectory()) 
+        File tmp_build_file = new File("./class_builder/templates/builder.java");
+        String tmp_build_relpath = tmp_build_file.getPath();
+        String tmp_build_abspath = tmp_build_file.getAbsolutePath();
+        
+        System.out.println("Builder Template Relative Path: "+tmp_build_relpath);
+        System.out.println("Builder Template Absolute Path: "+tmp_build_abspath);
+
+        if(tmp_build_file.exists() && !tmp_build_file.isDirectory()) 
         { 
-            System.out.println("Search Success: Template -- " + temp_builder);
+            System.out.println("Search Success: Template -- " + tmp_build_file);
         }
         else
         {
@@ -25,7 +31,7 @@ public class write {
 
         try
         {
-            reader = new Scanner(temp_builder);
+            reader = new Scanner(tmp_build_file);
         }
         catch (FileNotFoundException e)
         {

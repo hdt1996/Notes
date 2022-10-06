@@ -81,6 +81,14 @@ HM_ENTRY* allocEntry(const char* key, const char* value)
   return entry;
 }
 
+void debugLog(char* f_string, char[] str_arr, int str_size, int num_str_args)
+{
+  char str_buffer[str_size];
+  for(let i = 0; i < strlen(f_string); i++)
+  {
+    Serial.println(f_string[i])
+  }
+}
 void setEntry(HMap *htbl, const char *key, const char *value)
 {
   unsigned int slot = getHashIndex(key);
@@ -171,7 +179,22 @@ void HM_Dump(HMap *htbl)
     Serial.println("Finished");
   } 
 }
-
+void debugLog(char* f_string, char str_arr[], int str_size)
+{
+  char str_buffer[str_size];
+  //char f_copy[strlen(f_string)+1];
+  char t_copy[] = {'G','T','\0'};
+  t_copy[0]='Y';
+  Serial.println(t_copy);
+  char* m_copy  = malloc(strlen(f_string)+1);
+  //strcpy(f_copy,f_string);
+  strcpy(m_copy,f_string);
+  Serial.println(f_string);
+  Serial.println();
+  ///f_copy[0]="SEXY BITCH";
+  //Serial.println(f_copy);
+  Serial.println(m_copy);
+}
 void main()
 {
   HMap* hmp = initHashMap();

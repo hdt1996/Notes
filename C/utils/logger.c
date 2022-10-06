@@ -1,14 +1,14 @@
-#include <limits.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
+#include <stdlib.h>
+
 int countMaxStrinArr(char** str_arr[]) //array decays to pointer
 {
     int max_len=0;
     int curr_len;
     int size = atoi((*str_arr)[0]);
     (*str_arr)++;
+
     for(int ind=0; ind<size;ind++)
     {
         curr_len=strlen((*str_arr)[ind]);
@@ -20,6 +20,9 @@ int countMaxStrinArr(char** str_arr[]) //array decays to pointer
     //printf("\nMax length of strings in array is %d",max_len);
     return max_len;
 }
+
+
+
 char** buildArrbyLit(char* arg_string, char* delim)
 {    
     int curr_index = 0;
@@ -27,17 +30,11 @@ char** buildArrbyLit(char* arg_string, char* delim)
     int max_length = 0;
     int curr_length = 0;
     char x[2];
-    char msg_orig[200];
-    char msg_delims[200];
-    char msg_length[200];
-    char msg_elems[200];
-    
-    sprintf(msg_orig,"Original: %s\n",arg_string);
-    
-    Serial.println("Building Array from Literal...");
-    Serial.println(msg_orig);
+    printf("Building Array from Literal...\n");
+    printf("Original: %s\n",arg_string);
     for(int c = 0; c < strlen(arg_string); c++)
     {
+        //printf("%c\n",arg_string[c]);
         sprintf(x,"%c",arg_string[c]);
         if(strcmp(x,delim) == 0)
         {
@@ -54,13 +51,10 @@ char** buildArrbyLit(char* arg_string, char* delim)
     //Add null terminator
     max_length=max_length+1;
     int total_elems = total_delims + 1;
-    
-    sprintf(msg_delims,"Total Delims: %d",total_delims);
-    sprintf(msg_elems,"Total Elems: %d",total_elems);
-    sprintf(msg_length,"Max Length: %d",max_length);
-    Serial.println(msg_delims);
-    Serial.println(msg_elems);
-    Serial.println(msg_length);
+    printf("Total Delims: %d\n",total_delims);
+    printf("Total Elems: %d\n",total_elems);
+    printf("Max Length: %d\n",max_length);
+
     char** str_arr = malloc((total_elems)*sizeof(char*));
     for (int i = 0; i < total_elems; i++)
     {
@@ -71,6 +65,7 @@ char** buildArrbyLit(char* arg_string, char* delim)
     {
         strcpy(str_arr[i],"");
     }
+
     for(int c = 0; c < strlen(arg_string); c++)
     {
         char x[2];
@@ -87,6 +82,7 @@ char** buildArrbyLit(char* arg_string, char* delim)
     }
     return str_arr;
 }
+
 void logLits(char* f_string, char* str_arr, int str_size) //Function params: char* means char[size_of_input][1] | Only one character stored at each index
 {
   char str_buffer[str_size];
@@ -95,6 +91,7 @@ void logLits(char* f_string, char* str_arr, int str_size) //Function params: cha
   char msg_str[strlen(f_string)+strlen(str_arr)+2];
   strcpy(f_copy,f_string);
   strcpy(msg_str,"");
+
   char* token=strtok(f_copy," "); // strtok automatically frees and replaces pointer for String Literal
   
   //
@@ -103,7 +100,11 @@ void logLits(char* f_string, char* str_arr, int str_size) //Function params: cha
     //char *ptr = test[0];
     //strcpy(ptr,"TABSSS"); //strcpy takes Pointer not value. Updates value of pointer.
     //strcpy(test[0],"TESTIES");
+    //printf("%s\n",test[0]);
   //
+  //printf("\n");
+  ///printf("\n");
+  //printf("Scanning for Format Args...\n");
   int arg_index = 0;
   while( token != NULL)
   {
@@ -118,10 +119,12 @@ void logLits(char* f_string, char* str_arr, int str_size) //Function params: cha
         strcat(msg_str, " ");
         strcat(msg_str,token);
     }
+    ///printf("WORD: %s\n",token);
     token = strtok(NULL, " ");
   }
-    Serial.println(msg_str);
+    printf("%s\n",msg_str);
 }
+
 void logVars(char* f_string, char* str_arr[], int str_size) //Function params: char* means char[size_of_input][1] | Only one character stored at each index
 {
     char **args_arr=str_arr; ///make reference to pointer for naming conveniece. Str_arr is already a pointer so when we make another we add another asterisk *
@@ -131,6 +134,7 @@ void logVars(char* f_string, char* str_arr[], int str_size) //Function params: c
     char msg_str[strlen(f_string)+countMaxStrinArr(arg_ptr)+2];
     strcpy(f_copy,f_string);
     strcpy(msg_str,"");
+
     char* token=strtok(f_copy," "); // strtok automatically frees and replaces pointer for String Literal
     
     //
@@ -139,7 +143,11 @@ void logVars(char* f_string, char* str_arr[], int str_size) //Function params: c
         //char *ptr = test[0];
         //strcpy(ptr,"TABSSS"); //strcpy takes Pointer not value. Updates value of pointer.
         //strcpy(test[0],"TESTIES");
+        //printf("%s\n",test[0]);
     //
+    //printf("\n");
+    ///printf("\n");
+    //printf("Scanning for Format Args...\n");
     int arg_index = 0;
     while( token != NULL)
     {
@@ -154,7 +162,21 @@ void logVars(char* f_string, char* str_arr[], int str_size) //Function params: c
             strcat(msg_str, " ");
             strcat(msg_str,token);
         }
+        ///printf("WORD: %s\n",token);
         token = strtok(NULL, " ");
     }
-        Serial.println(msg_str);
+        printf("%s\n",msg_str);
+}
+
+void main()
+{
+    //char strvar []="YOU ARE THE MAN"; // char strvar [20][1]
+    //char strvar2 [][10] = {"YOU","ARE","THE","MAN"}; //char strvar [4][3]
+    //char* v1="HUNG";
+    //char* v2="TEST1123";
+    //logLits("\nKey: %s \nValue: %s \n", "HUNGY POO", 5);
+    //logVars("\nKey: %s \nValue: %s \n", (char*[]){"2",v1,v2,NULL}, 5);
+    //*strvar2[0]="BITCH";
+    //strcpy(strvar2[0],"BITCH");
+    //printf("%s",strvar2[0]);
 }

@@ -17,13 +17,10 @@ int countMaxStrinArr(char** str_arr[]) //array decays to pointer
             max_len=curr_len;
         }
     }
-    //printf("\nMax length of strings in array is %d",max_len);
     return max_len;
 }
 
-
-
-char** buildArrbyLit(char* arg_string, char* delim)
+char** buildArrbyLit(char* arg_string, const char* delim)
 {    
     int curr_index = 0;
     int total_delims = 0;
@@ -55,7 +52,7 @@ char** buildArrbyLit(char* arg_string, char* delim)
     printf("Total Elems: %d\n",total_elems);
     printf("Max Length: %d\n",max_length);
 
-    char** str_arr = malloc((total_elems)*sizeof(char*));
+    char** str_arr =malloc((total_elems)*sizeof(char*));
     for (int i = 0; i < total_elems; i++)
     {
         str_arr[i] = malloc((max_length+1) * sizeof(char));
@@ -72,7 +69,6 @@ char** buildArrbyLit(char* arg_string, char* delim)
         sprintf(x,"%c",arg_string[c]);
         if(strcmp(x,delim) == 0)
         {
-            //strcat(str_arr[curr_index]," ");
             curr_index++;
         }
         else
@@ -91,20 +87,7 @@ void logLits(char* f_string, char* str_arr, int str_size) //Function params: cha
   char msg_str[strlen(f_string)+strlen(str_arr)+2];
   strcpy(f_copy,f_string);
   strcpy(msg_str,"");
-
   char* token=strtok(f_copy," "); // strtok automatically frees and replaces pointer for String Literal
-  
-  //
-    //char test[10][10];
-    //char (*tp)[10][10] = &test; //Pointer to WHOLE array, noticing *tp which means taking values
-    //char *ptr = test[0];
-    //strcpy(ptr,"TABSSS"); //strcpy takes Pointer not value. Updates value of pointer.
-    //strcpy(test[0],"TESTIES");
-    //printf("%s\n",test[0]);
-  //
-  //printf("\n");
-  ///printf("\n");
-  //printf("Scanning for Format Args...\n");
   int arg_index = 0;
   while( token != NULL)
   {
@@ -119,13 +102,12 @@ void logLits(char* f_string, char* str_arr, int str_size) //Function params: cha
         strcat(msg_str, " ");
         strcat(msg_str,token);
     }
-    ///printf("WORD: %s\n",token);
     token = strtok(NULL, " ");
   }
     printf("%s\n",msg_str);
 }
 
-void logVars(char* f_string, char* str_arr[], int str_size) //Function params: char* means char[size_of_input][1] | Only one character stored at each index
+void logVars(char* f_string, char** str_arr, int str_size) //Function params: char* means char[size_of_input][1] | Only one character stored at each index
 {
     char **args_arr=str_arr; ///make reference to pointer for naming conveniece. Str_arr is already a pointer so when we make another we add another asterisk *
     char ***arg_ptr=&args_arr;
@@ -134,20 +116,8 @@ void logVars(char* f_string, char* str_arr[], int str_size) //Function params: c
     char msg_str[strlen(f_string)+countMaxStrinArr(arg_ptr)+2];
     strcpy(f_copy,f_string);
     strcpy(msg_str,"");
-
     char* token=strtok(f_copy," "); // strtok automatically frees and replaces pointer for String Literal
     
-    //
-        //char test[10][10];
-        //char (*tp)[10][10] = &test; //Pointer to WHOLE array, noticing *tp which means taking values
-        //char *ptr = test[0];
-        //strcpy(ptr,"TABSSS"); //strcpy takes Pointer not value. Updates value of pointer.
-        //strcpy(test[0],"TESTIES");
-        //printf("%s\n",test[0]);
-    //
-    //printf("\n");
-    ///printf("\n");
-    //printf("Scanning for Format Args...\n");
     int arg_index = 0;
     while( token != NULL)
     {
@@ -162,21 +132,15 @@ void logVars(char* f_string, char* str_arr[], int str_size) //Function params: c
             strcat(msg_str, " ");
             strcat(msg_str,token);
         }
-        ///printf("WORD: %s\n",token);
         token = strtok(NULL, " ");
     }
         printf("%s\n",msg_str);
 }
 
-void main()
+
+int main()
 {
-    //char strvar []="YOU ARE THE MAN"; // char strvar [20][1]
-    //char strvar2 [][10] = {"YOU","ARE","THE","MAN"}; //char strvar [4][3]
-    //char* v1="HUNG";
-    //char* v2="TEST1123";
     //logLits("\nKey: %s \nValue: %s \n", "HUNGY POO", 5);
-    //logVars("\nKey: %s \nValue: %s \n", (char*[]){"2",v1,v2,NULL}, 5);
-    //*strvar2[0]="BITCH";
-    //strcpy(strvar2[0],"BITCH");
-    //printf("%s",strvar2[0]);
+    logVars("\nKey: %s \nValue: %s \n", (char*[]){"2","HUNG","COOL"}, 5);
+    return 0;
 }

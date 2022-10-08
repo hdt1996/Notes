@@ -20,6 +20,7 @@ namespace test
                             //first element is a POINTER of type char** AKA POINTER to memory address to char
                             //Need to dereference first element to get first address of underlying string array -> type char*
                             //Can dereference again to get actual char values
+                            //IMPORTANT: No structure means we are dealing with char or memory chars, no char[] at all
         printf("Memory address value of pointer: %p\n",(void*)ppa);
         printf("Memory address actual pointer: %p\n",(void*)&ppa);
         printf("%s\n",ppa[i]); //after dereferencing to first address of string array char*; valid for print

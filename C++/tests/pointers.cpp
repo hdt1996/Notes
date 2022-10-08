@@ -3,6 +3,14 @@
 #include <string.h>
 #include <stdlib.h>
 
+/*
+    Definitions;
+    Pointer vs Reference:
+        Reference variable cannot be set without value of existing object or variable
+        Reference variable is considered an "alias" for existing variable/object
+        Set up with char& ref_var = orig_var;
+        temporary object: unnamed object created by compiler to store temp value
+*/
 namespace test
 {
 
@@ -194,6 +202,7 @@ int pointers_main()
 
     printf("\ntest::pa\n");
     test::pa(pa);
+    test::pa("HELLO WORLD"); //Hello World already treated as const char* since it is string literal
 
     printf("\ntest::ppa\n");
     test::ppa(ppa);         //arg: ppa is array of pointers and will decay to first element address as function arg
@@ -224,13 +233,13 @@ to get value of that memory address which is char and value of "1".
     TestClass tc((char(*)[6])"BITCH"); //This is pointer to array of 6 characters, in function, value is address of first pointer; array decayed to this memory address
                                         //This pointer is stored in stack (local scope) but value is string literal which is stored in global/static close to text/machine_code
 
-    //TestClass2 tc2((const char *[]){"BITCH2"}); //Error because temporary array. 
+    //TestClass2 tc2((const char *[]){"BBBB"}); //Error because temporary array. 
                                                   //To pass string literal to function, arg needs to be pointer to something!
                                                   //This is array of pointers established inline (Works in C but not acceptable in C++ -> doesn't allow allocation)
                                                   //Pointers may be stored in local scope/stack and values in global/static since they contain string literals
                                                   //HOWEVER, array itself size or no size is not declared in memory (would have pointer) and no pointer was created
                                                   //Considered a temporary array with no scope
-    //TestClass2 tc2(new char*[]{"BITCHY"});
+    //TestClass2 tc2(new char*[]{"BBBB"});
     char** z = new char*[55]; //LVALUE: pointer to pointer to memory address of char
                               //RVALUE: array of size 55 with pointers to char
                               //Notice that z pointer does not have dimensions. 

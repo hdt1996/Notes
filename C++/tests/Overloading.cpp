@@ -44,19 +44,34 @@ public:
 private:
     char **name ;
 };
+class TestClass3 {
+public:
+    friend std::ostream& operator<<(std::ostream& os, TestClass3 const & tc) {
+        return os << "std::ostream& overloaded: " << tc.name << std::endl;
+    }
+    TestClass3(const char *name ) //receives a array of 6 pointers to memory address of char
+                             //We are not allowd to pass string literal in through array of pointers, only POINTER to array is allowed!
+    {   
+        name = name;
+    };
+    TestClass3(){};
 
-int overloading_main()
+private:
+    char **name ;
+};
+int OVLD_main()
 {
-    TestClass tc((char(*)[6])"BITCH"); //This is pointer to array of 6 characters, in function, value is address of first pointer; array decayed to this memory address
+    TestClass tc((char(*)[6])"BBBB"); //This is pointer to array of 6 characters, in function, value is address of first pointer; array decayed to this memory address
                                         //This pointer is stored in stack (local scope) but value is string literal which is stored in global/static close to text/machine_code
 
-    //TestClass2 tc2((const char *[]){"BITCH2"}); //Error because temporary array. 
+
+    //TestClass2 tc2((const char *[]){"BBBB"}); //Error because temporary array. 
                                                   //To pass string literal to function, arg needs to be pointer to something!
                                                   //This is array of pointers established inline (Works in C but not acceptable in C++ -> doesn't allow allocation)
                                                   //Pointers may be stored in local scope/stack and values in global/static since they contain string literals
                                                   //HOWEVER, array itself size or no size is not declared in memory (would have pointer) and no pointer was created
                                                   //Considered a temporary array with no scope
-    //TestClass2 tc2(new char*[]{"BITCHY"});
+    //TestClass2 tc2(new char*[]{"BBBB"});
     char** z = new char*[55]; //LVALUE: pointer to pointer to memory address of char
                               //RVALUE: array of size 55 with pointers to char
                               //Notice that z pointer does not have dimensions. 
@@ -66,8 +81,9 @@ int overloading_main()
                          //If we print z[0] or *(z+0) value is 0x0 or NULL;
                          //If we try to assign different type to z's indices, we will get data type error
                          // this new returns pointer to memory address of FIRST element in char[10] array (No dimension data)
-    strcpy(z[0],"HELLO"); //Assigns string value to 
-                              
+    strcpy(z[0],"HELLO"); //Assigns string value to value of first index / memory address of z's first element which is a POINTER
+    TestClass2 tc2(z); //WORKS!
+    TestClass3 tc3("Broccoli"); //WORKS!                        
     //strcpy(*z,"HELLO WORLD");
     delete z;
     std::cout << tc << std::endl;

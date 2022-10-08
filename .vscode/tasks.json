@@ -32,7 +32,7 @@
                 "-g",
                 "${fileDirname}/*.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/../compiled/Obj_${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${fileDirname}"

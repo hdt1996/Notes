@@ -241,13 +241,44 @@ to get value of that memory address which is char and value of "1".
                                                   //Considered a temporary array with no scope
     //TestClass2 tc2(new char*[]{"BBBB"});
     char** z = new char*[55]; //LVALUE: pointer to pointer to memory address of char
-                              //RVALUE: array of size 55 with pointers to char
+                              //RVALUE: array of size 55 with pointers to char (Array of pointers)
                               //Notice that z pointer does not have dimensions. 
-                              //This is due to array of pointers's value decaying to memory address of first element (first pointer AKA char* type)
+                              //New... like malloc from C returns pointer with value as memory address of FIRST pointer in array of pointers
+                              //NOT the same as pointer with value as memory address of array of pointers --> WRONG
     const char* z_txt = "Hello"; 
     z[0] = new char[10]; //Initializes memory of size 10*(sizeof(char)); assigns declaration to each memory block to be type char*
                          //If we print z[0] or *(z+0) value is 0x0 or NULL;
                          //If we try to assign different type to z's indices, we will get data type error
                          // this new returns pointer to memory address of FIRST element in char[10] array (No dimension data)
     strcpy(z[0],"HELLO"); //Assigns string value to 
+*/
+
+/*
+    From C Malloc (Check for compatibility of data types especially const char* for c++)
+    char** str_arr =malloc((total_elems)*sizeof(char*)+1);
+                                //malloc creates array of DECLARED (NOT DEFINED) pointers with value as memory address to char of size 4 in this case
+                                //malloc returns pointer with value as memory address of first pointer to char from created array
+                                //IMPORTANT: MALLOC DOES NOT return pointer with value as memory address of CREATED ARRAY --> WRONG
+                                //RVALUE: since array decays to memory address of first element
+                                //Remember
+                                                            
+
+    for (int i = 1; i < total_elems + 1; i++)
+    {
+        str_arr[i] = malloc((max_length+1) * sizeof(char)+2);
+    };
+    //char te[2];   //Best way to copy character or sequence of characters to first element of str_arr which declares char* (Works with array degradation)
+
+    //sprintf(te,"%i",total_elems);
+    //strcpy(str_arr[0],te);
+
+    char* te= "2";  //If we were to declare char* te, we need to place in string literal for array to initialize without error and set index 0 to pointer itself(its address)
+                    //Note that pointer's value is memory address of first element of array of chars
+    str_arr[0] = te; //store memory address of te to first index of str_arr | value of first index is POINTER
+    
+    char *tc;
+
+
+
+
 */

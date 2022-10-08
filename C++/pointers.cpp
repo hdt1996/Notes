@@ -17,8 +17,8 @@ namespace test
         int i = 0;
         int c = 0;
         printf("%s -> Wrong: Trying to print pointer use %%p instead..\n",ppa); //Does not work because arg ppa is first element of original ppa
-                            //first element is a POINTER of type char** AKA POINTER to memory address to char
-                            //Need to dereference first element to get first address of underlying string array -> type char*
+                            //first element is a memory address of POINTER type char** AKA POINTER to memory address to char
+                            //Need to dereference first element to get value or memory address to -> type char*
                             //Can dereference again to get actual char values
                             //IMPORTANT: No structure means we are dealing with char or memory chars, no char[] at all
         printf("Memory address value of pointer: %p\n",(void*)ppa);
@@ -158,7 +158,8 @@ int main()
     printf("\ntest::aa\n");
     test::aa(aa); //arg: aa is type char[10][10]; we are passing by value!
                   //Since array decays to memory address of first element
-                  //First element of aa is subarray of 10 chars AKA char*[10]
+                  //First element of aa type is subarray of 10 chars AKA char*[10];
+                  //this element (subarray) decays/stores value of address of its first element which is (char*)
                   //Note: In function, when using subarray by name, the value is memory address of its first element which is char(*)
                   //When we print, %s looks for char* datatype but subarray is not char*, it is char*[10]
                   //EMPHASIZE: subarray is type char *[10] ==> array of memory addresses NOT char(*)[10] which signifies memory address to ARRAY
@@ -186,4 +187,24 @@ int main()
     printf("\n");
     return 0;
 }
+
+/*
+const char a[]= "12345678";
+const char \*b[9] = {"12345678"};
+
+For a:
+Since this is a regular 1d char array, I think of this as..
+"an array of size 9 containing memory addresses to value of char"
+If we do a[0] or \*(a+0), memory address of first index is dereferenced to get direct value.
+
+for b:
+I think of this as...
+an array of size 9 elements containing memory addresses of pointers pointing to memory addresses to value of char"
+if we do b[0] or \*(b+0), memory address of first index is dereferenced to get value which is the actual pointer object
+if we do b[0][0] or \*(\*(b+0)+0), pointer's value or memory address(type char*) is dereferenced
+to get value of that memory address which is char and value of "1".
+*/
+
+
+
 

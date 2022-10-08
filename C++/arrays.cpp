@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 
-int main()
+int arrays_main()
 {
     char test[]="HELLO";
     printf("\nOriginal 1D Array Value: %s\n",test);
@@ -86,15 +86,15 @@ int main()
     printf("\n\n");
     for( int i = 0; i < strlen(test_2d[0]); i++)
     {
-        printf("POINTER ADDRESS: &arr2d[0][%d] = %lu = %lu == &*(*(arr2d+0)+%d)\n", i, (void*)&test_2d[0][i], (void*)&(*(*(test_2d+0)+i)), i);
+        printf("POINTER ADDRESS: &arr2d[0][%d] = %p = %p == &*(*(arr2d+0)+%d)\n", i, (void*)&test_2d[0][i], (void*)&(*(*(test_2d+0)+i)), i);
     }
     for( int i = 0; i < strlen(test_2d[1]); i++)
     {
-        printf("POINTER ADDRESS: &arr2d[1][%d] = %lu = %lu == &*(*(arr2d+1)+%d)\n", i, (void*)&test_2d[1][i], (void*)&(*(*(test_2d+1)+i)), i);
+        printf("POINTER ADDRESS: &arr2d[1][%d] = %p = %p == &*(*(arr2d+1)+%d)\n", i, (void*)&test_2d[1][i], (void*)&(*(*(test_2d+1)+i)), i);
     }
     for( int i = 0; i < strlen(test_2d[2]); i++)
     {
-        printf("POINTER ADDRESS: &arr2d[2][%d] = %lu = %lu == &*(*(arr2d+2)+%d)\n", i, (void*)&test_2d[2][i], (void*)&(*(*(test_2d+2)+i)), i);
+        printf("POINTER ADDRESS: &arr2d[2][%d] = %p = %p == &*(*(arr2d+2)+%d)\n", i, (void*)&test_2d[2][i], (void*)&(*(*(test_2d+2)+i)), i);
     }
     /*
             arr[0][0]= 'H' = 'H' =  *(*(arr+0)+0)

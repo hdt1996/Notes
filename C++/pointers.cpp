@@ -13,14 +13,18 @@ namespace test
 
     void ppa(const char **ppa)   //Same as const char *ppa[]
                             //No dimensional data aside from value data type
+                            //Initially passed in was an array of pointers
+                            //Value of array is decayed to memory address of first POINTER
+                            //first element is a memory address of POINTER type char** AKA POINTER to memory address to char
+                            //We get char** because data type of pointer is char*, but first index of array is memory address TO Pointer hence char** (add another *)
+                            //Need to dereference first element to get value or memory address to -> type char*
+                            //Can dereference again to get actual char values
+                            //IMPORTANT: No structure means we are dealing with char or memory chars, no char[] at all
     {
         int i = 0;
         int c = 0;
         printf("%s -> Wrong: Trying to print pointer use %%p instead..\n",ppa); //Does not work because arg ppa is first element of original ppa
-                            //first element is a memory address of POINTER type char** AKA POINTER to memory address to char
-                            //Need to dereference first element to get value or memory address to -> type char*
-                            //Can dereference again to get actual char values
-                            //IMPORTANT: No structure means we are dealing with char or memory chars, no char[] at all
+
         printf("Memory address value of pointer: %p\n",(void*)ppa);
         printf("Memory address actual pointer: %p\n",(void*)&ppa);
         printf("%s\n",ppa[i]); //after dereferencing to first address of string array char*; valid for print
@@ -61,6 +65,12 @@ namespace test
     void aa_ptr2(char (*aa_ptr2)[10]) //same as char aa_ptr2[10][10]
                                     //pointer to array of size 10 with char
                                     //NOTE: EXACT SAME RESULTS AS aa
+                                    //receives pointer that stores memory address of array of 10 chars as VALUE
+                                    // Since pointer is NOT an array, not subject to decay 
+                                    // -> When we dereference pointer, we are getting value of its stored address which is char[10]
+                                    // NOTE that char[10] is an array
+                                    // To print this array using printf("%s",array); we need the 2nd arg to be char*
+                                    // Luckily for us, once we get the array and pass it in as VALUE, it automatically decays to memory address of first address AKA char*
     {
         int i = 0;
         int c = 0;
@@ -86,7 +96,7 @@ namespace test
     }
 }
 
-int main()
+int pointers_main()
 {
     //Essential Rules:
     /*
@@ -139,8 +149,13 @@ int main()
     char (*aa_ptr3)[10][10] = &(aa);    //Declare pointer to whole array
                                         //Since we use & for original aa, we must match ALL dimensions
 
-    const char *pa = "12345678";       //SAME AS const char (*ppa)= {"12345678"};
-                                        // Declare pointer to char
+    const char pa2[]="12345678";        //Declare a char array of 9 elements, values being memory address to char
+                                        //Compared to below, due to array decay:
+                                        // pa2[0] = pa[0] since these both point to same memory addresses
+                                        // However note that type is different, pa2[] is char array, pa is pointer
+    const char *pa = "12345678";       //SAME AS const char (*pa)= {"12345678"};
+                                        //Creates pointer to string literal which is stored in STATIC memory
+                                        // Declare pointer with value of memory address of char
                                         // We have no dimension data of how many values unless we specify
                                         // Whole string is printable without need for dimensions due to NULL terminator (Also present in above char*);
 
@@ -190,21 +205,40 @@ int main()
 
 /*
 const char a[]= "12345678";
-const char \*b[9] = {"12345678"};
+const char *b[9] = {"12345678"};
 
 For a:
 Since this is a regular 1d char array, I think of this as..
 "an array of size 9 containing memory addresses to value of char"
-If we do a[0] or \*(a+0), memory address of first index is dereferenced to get direct value.
+If we do a[0] or *(a+0), memory address of first index is dereferenced to get direct value.
 
 for b:
 I think of this as...
 an array of size 9 elements containing memory addresses of pointers pointing to memory addresses to value of char"
-if we do b[0] or \*(b+0), memory address of first index is dereferenced to get value which is the actual pointer object
-if we do b[0][0] or \*(\*(b+0)+0), pointer's value or memory address(type char*) is dereferenced
+if we do b[0] or *(b+0), memory address of first index is dereferenced to get value which is the actual pointer object
+if we do b[0][0] or *(*(b+0)+0), pointer's value or memory address(type char*) is dereferenced
 to get value of that memory address which is char and value of "1".
+
+
+
+    TestClass tc((char(*)[6])"BITCH"); //This is pointer to array of 6 characters, in function, value is address of first pointer; array decayed to this memory address
+                                        //This pointer is stored in stack (local scope) but value is string literal which is stored in global/static close to text/machine_code
+
+    //TestClass2 tc2((const char *[]){"BITCH2"}); //Error because temporary array. 
+                                                  //To pass string literal to function, arg needs to be pointer to something!
+                                                  //This is array of pointers established inline (Works in C but not acceptable in C++ -> doesn't allow allocation)
+                                                  //Pointers may be stored in local scope/stack and values in global/static since they contain string literals
+                                                  //HOWEVER, array itself size or no size is not declared in memory (would have pointer) and no pointer was created
+                                                  //Considered a temporary array with no scope
+    //TestClass2 tc2(new char*[]{"BITCHY"});
+    char** z = new char*[55]; //LVALUE: pointer to pointer to memory address of char
+                              //RVALUE: array of size 55 with pointers to char
+                              //Notice that z pointer does not have dimensions. 
+                              //This is due to array of pointers's value decaying to memory address of first element (first pointer AKA char* type)
+    const char* z_txt = "Hello"; 
+    z[0] = new char[10]; //Initializes memory of size 10*(sizeof(char)); assigns declaration to each memory block to be type char*
+                         //If we print z[0] or *(z+0) value is 0x0 or NULL;
+                         //If we try to assign different type to z's indices, we will get data type error
+                         // this new returns pointer to memory address of FIRST element in char[10] array (No dimension data)
+    strcpy(z[0],"HELLO"); //Assigns string value to 
 */
-
-
-
-

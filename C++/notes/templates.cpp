@@ -73,7 +73,7 @@ void test_str(const char* str)
     printf("STR TEST: %s\n", str);
 }
 
-int main()
+int ttmain()
 {
     Print(5);
     Print("Hello");
@@ -98,4 +98,5 @@ int main()
                                         //When uses for initializing P property, it technically converts to a pointer but I will still keep interpreting it for now
                                         //as memory address to type char
     test2.printP();
+    return 0;
 }

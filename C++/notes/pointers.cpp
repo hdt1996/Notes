@@ -267,13 +267,15 @@ to get value of that memory address which is char and value of "1".
     {
         str_arr[i] = malloc((max_length+1) * sizeof(char)+2);
     };
-    //char te[2];   //Best way to copy character or sequence of characters to first element of str_arr which declares char* (Works with array degradation)
+    //char te[2];   //Best way to copy character or sequence of characters to array in which memory address of first element is CONVERTED/DECAYED to char*
 
     //sprintf(te,"%i",total_elems);
     //strcpy(str_arr[0],te);
 
-    char* te= "2";  //If we were to declare char* te, we need to place in string literal for array to initialize without error and set index 0 to pointer itself(its address)
+    const char* te= "2";  //If we were to declare char* te, we need to place in string literal for array to initialize without error and set index 0 to pointer itself(its address)
                     //Note that pointer's value is memory address of first element of array of chars
+                    //C++ --> REMEMBER THE CONST CHAR*
+
     str_arr[0] = te; //store memory address of te to first index of str_arr | value of first index is POINTER
     
     char *tc;

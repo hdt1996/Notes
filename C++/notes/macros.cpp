@@ -28,4 +28,5 @@
 int mmain()
 {
     WAIT;
+    return 0;
 }

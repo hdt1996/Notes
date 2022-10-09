@@ -185,10 +185,11 @@ void logVars(char* f_string, char** str_arr, int str_size) //Function params: ch
 
 }
 
-
+/*
 int main()
 {
     logLits("\nKey: %s \nValue: %s \n", "HUNGY POO", 5);
-    //logVars("\nKey: %s \nValue: %s \n", (char*[]){"2","HUNG","COOL"}, 5);
+    logVars("\nKey: %s \nValue: %s \n", (char*[]){"2","HUNG","COOL"}, 5); //array of pointers
     return 0;
 }
+*/

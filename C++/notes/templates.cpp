@@ -1,6 +1,8 @@
 #include <iostream>
     const char x [] = "BAT"; //x variable array is allocated to heap, actual values at memory addresses in heap
     const char* xp= &x[0]; //This pointer is only known at runtime, NOT compile time, allocated to stack
+
+#define TESTT "HELLO WORLD"
 void Print(int value)
 {
     std::cout << value << std::endl;
@@ -73,7 +75,7 @@ void test_str(const char* str)
     printf("STR TEST: %s\n", str);
 }
 
-int ttmain()
+int main()
 {
     Print(5);
     Print("Hello");
@@ -97,6 +99,9 @@ int ttmain()
     Templates::TestPointers2<x> test2; //passing in global array works because its value is memory address of first element which is valid (Array decay)
                                         //When uses for initializing P property, it technically converts to a pointer but I will still keep interpreting it for now
                                         //as memory address to type char
+
+    static const char tarr[] = "Hello World";
+    Templates::TestPointers2<tarr> test4; //WORKS! NOTE WE NEED THE STATIC to assign to static memory AKA global/static in data portion
     test2.printP();
     return 0;
 }

@@ -173,7 +173,20 @@ int pointers_main()
                                         // We have no dimension data of how many values in subarray unless we specify
                                         // Unless we point to an established array, no way to get exact number of values for char
                                         // We can set up a size as first index and use ppa++ after saving size and passing it to function
-    
+    const char *ppa_ptr = *ppa;
+    const char* (*ppa_ptr2)[3] = &ppa;
+
+
+    int* nums[5];
+
+    for(int i = 0; i < 5; i++)
+    {
+        int* vptr; //VALUE OF POINTER MUST BE LITERAL MEMORY ADDRESS
+        *vptr = 5;
+        int n = 5; //RVALUE is right side of equal operator ===> VALUE
+        char* word = "Tedy"; //array of chars in which the VALUE of the array is the first memory address
+        nums[i]=vptr;
+    }
     // --------------------------------------------------FUNCTIONS---------------------------------------------
     printf("test::a\n");
     test::a(a); //arg: a is type char[10]; we are passing by value!
@@ -212,6 +225,11 @@ int pointers_main()
     return 0;
 }
 
+int main()
+{
+    return 0;
+}
+
 /*
 const char a[]= "12345678";
 const char *b[9] = {"12345678"};
@@ -230,7 +248,7 @@ to get value of that memory address which is char and value of "1".
 
 
 
-    TestClass tc((char(*)[6])"BITCH"); //This is pointer to array of 6 characters, in function, value is address of first pointer; array decayed to this memory address
+    TestClass tc((char(*)[6])"BBBBB"); //This is pointer to array of 6 characters, in function, value is address of first pointer; array decayed to this memory address
                                         //This pointer is stored in stack (local scope) but value is string literal which is stored in global/static close to text/machine_code
 
     //TestClass2 tc2((const char *[]){"BBBB"}); //Error because temporary array. 

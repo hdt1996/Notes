@@ -119,6 +119,8 @@ namespace classes
             static constexpr const char* word = test_word(); //To have proper static variable for string, need type of constexpr const char*
             //static const std::string word = "Property"; This does not work because std::string is a class initializer using dynamic memory allocation (Not static)
             //std::string word = "Property"; Even if we declared this public variable, we cannot use it unless we can instantiate the Uninstantiated_User object
+            //static const char* word2 = "WHOLE NEW WORLD"; //DOES NOT WORK BECAUSE NEEDS TO BE DEFINED OUTSIDE CLASS
+                                                          //C++11, you can do at line 119 using constexpr
             static void print_x()
             {
                 printf("%d\n",x);
@@ -129,7 +131,7 @@ namespace classes
 }
 
 
-int classes_main()
+int main()
 {
     structs::User s_user;
     s_user.first_name="Hung";

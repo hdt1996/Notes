@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include "../headers/logger.h"
 
-char helper_str[200];
-
 namespace Logger
 {
     namespace CharArrays
@@ -29,7 +27,7 @@ namespace Logger
 
         char** build2dArraybyStrLiteral(char* arg_string, const char* delim)
         {    
-
+            LOG_HELPER;
             int total_delims = 0;
             int max_length = 0;
             int curr_length = 0;
@@ -117,6 +115,7 @@ namespace Logger
                                                             //C++ standards require us to notate args_str with const char* but we do not in this case since whatever C allows it.
                                                             
     {
+        LOG_HELPER;
         char argstr_copy[strlen(args_str)+1];
         char fstr_copy[strlen(f_string)+1];
         char log_str[strlen(f_string)+strlen(args_str)+1];
@@ -161,6 +160,7 @@ namespace Logger
 
     void logStrVars(char* f_string, char** str_arr, int str_size) //Function params: char* means char[size_of_input][1] | Only one character stored at each index
     {
+        LOG_HELPER;
         char **args_arr=str_arr; ///make reference to pointer for naming conveniece. Str_arr is already a pointer so when we make another we add another asterisk *
         char ***arg_ptr=&args_arr;
         char f_copy[strlen(f_string)+1];
@@ -195,7 +195,7 @@ namespace Logger
 
 
 
-/*
+
 int main()
 {
     INIT_LOGGER   
@@ -203,5 +203,5 @@ int main()
     //Logger::logStrVars("\nKey: %s \nValue: %s \n", (char*[]){"2","HUNG","COOL"}, 5); //array of pointers
     return 0;
 }
-*/
+
 

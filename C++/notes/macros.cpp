@@ -4,6 +4,7 @@
 //Use Cases of Macros
 
 /*
+    OPERATION: Fines defined preprocessor and INSERTS into code
     Logging/Debugging 
         memory allocations by line/file with malloc/new or array declarations regarding heap/stack
         define keywords to functions to enable logging depending on debug/release setting

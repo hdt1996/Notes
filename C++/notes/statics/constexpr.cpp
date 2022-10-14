@@ -3,6 +3,13 @@
 #include <string.h>
 #include <string>
 #include <stdlib.h>
+/*
+    Essential Rules for constexpr:
+        Meaning: Variable with constexpr guaranteed to have value at COMPILE time
+        static const or const could be either COMPILE or RUNTIME
+*/
+
+
 
 int constexpr_main()
 {

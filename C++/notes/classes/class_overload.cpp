@@ -46,11 +46,11 @@ private:
 };
 class TestClass3 {
 public:
-    friend std::ostream& operator<<(std::ostream& os, TestClass3 const & tc) {
+    friend std::ostream& operator <<(std::ostream& os, TestClass3 const & tc) {
         return os << "std::ostream& overloaded: " << tc.name << std::endl;
     }
     TestClass3(const char *name ) //receives a array of 6 pointers to memory address of char
-                             //We are not allowd to pass string literal in through array of pointers, only POINTER to array is allowed!
+                                  //ACCEPTS STRING LITERAL!
     {   
         name = name;
     };
@@ -59,7 +59,7 @@ public:
 private:
     char **name ;
 };
-int OVLD_main()
+int fmain()
 {
     TestClass tc((char(*)[6])"BBBB"); //This is pointer to array of 6 characters, in function, value is address of first pointer; array decayed to this memory address
                                         //This pointer is stored in stack (local scope) but value is string literal which is stored in global/static close to text/machine_code
@@ -82,9 +82,11 @@ int OVLD_main()
                          //If we try to assign different type to z's indices, we will get data type error
                          // this new returns pointer to memory address of FIRST element in char[10] array (No dimension data)
     strcpy(z[0],"HELLO"); //Assigns string value to value of first index / memory address of z's first element which is a POINTER
-    TestClass2 tc2(z); //WORKS!
+    //WORKS!
     TestClass3 tc3("Broccoli"); //WORKS!                        
-    //strcpy(*z,"HELLO WORLD");
+    strcpy(*z,"HELLO WORLD");
+    TestClass2 tc2(z); 
+    printf("%s",*z);
     delete z;
     std::cout << tc << std::endl;
     return 0;

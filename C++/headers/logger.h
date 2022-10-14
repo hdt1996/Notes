@@ -1,10 +1,10 @@
 #define DEV 0
-
+#define LOG_HELPER char helper_str[200]
 #if DEV == 0
     #define LOG_STR(str_literal) printf(str_literal)
     #define LOG_FSTR_TYPE(combined_str) printf("%s",combined_str)
     #define INIT_LOGGER ;
-    ;
+
 #elif DEV == 1
     #define LOG_STR(str_literal) Serial.print(str_literal)
     #define LOG_FSTR_TYPE(combined_str) Serial.print(combined_str)
